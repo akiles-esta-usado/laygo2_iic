@@ -1,0 +1,3 @@
+source /foss/pdk/sky130A/libs.tech/magic/sky130A.magicrc
+addpath /foss/designs/laygo2_workspace_sky130/magic_layout/skywater130_microtemplates_dense
+addpath /foss/designs/laygo2_workspace_sky130/magic_layout/logic_generated
