@@ -5,11 +5,11 @@ The idea of this repo is to have the minimum requirements to run laygo2 in the i
 
 ## Setup
 
-Laygo2 only requires to install ipython, the other packages and programs are already in if you're using iic-osic-tools container.
+### Install Laygo2
 
-
-~~~bash
-$ python -m pip install --user ipython
+~~~
+$ git submodule init
+$ git submodule update
 ~~~
 
 
@@ -50,12 +50,6 @@ $ ./start_mag_console.sh logic_generated_inv_2x.tcl
 It only exists because we need ``-rcfile .maginit`` as parameter to set the PATH to laygo2 microtemplates and generated logic.
 If we update the path in some system ``.magicrc`` file, this script will become unnecesary.
 
-
-### Remove ipython
-
-With a python script that execute the examples and generates the tcl files, we can remove the ipython dependency.
-
-If we turn laygo2 into a python library, we can run the scripts without ``bag_startup.py`` file.
 
 ### Add laygo2 as python package
 
