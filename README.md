@@ -5,11 +5,11 @@ The idea of this repo is to have the minimum requirements to run laygo2 in the i
 
 ## Setup
 
-Laygo2 only requires to install ipython, the other packages and programs are already in.
+Laygo2 only requires to install ipython, the other packages and programs are already in if you're using iic-osic-tools container.
 
 
 ~~~bash
-$ python -m pip install ipython
+$ python -m pip install --user ipython
 ~~~
 
 

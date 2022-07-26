@@ -31,15 +31,23 @@ export BAG_TECH_CONFIG_DIR="$BAG_WORK_DIR/sky130"
 
 
 export PYTHONPATH=""
-export PYTHONPATH=$PYTHONPATH":$BAG_FRAMEWORK"
-export PYTHONPATH=$PYTHONPATH":$BAG_TECH_CONFIG_DIR"
-export PYTHONPATH=$PYTHONPATH":$BAG_WORK_DIR/laygo2"
 
-echo $PYTHONPATH
+#export PYTHONPATH=$BAG_FRAMEWORK
+#export PYTHONPATH=$BAG_TECH_CONFIG_DIR:$PYTHONPATH
+#export PYTHONPATH=$BAG_WORK_DIR"/laygo2":$PYTHONPATH
+export PYTHONPATH="/foss/designs/laygo2":$PYTHONPATH
+export PYTHONPATH="/foss/designs/laygo2_reduced_workspace":$PYTHONPATH
+
+#echo $PYTHONPATH
 
 # disable QT session manager warnings
 unset SESSION_MANAGER
 
 #exec ${BAG_PYTHON} -m IPython $@
 #exec python -m pip install ipython
-exec ipython #-i bag_startup.py
+#exec python #-i bag_startup.py
+
+exec python $@
+
+
+## Falta laygo2_tech
