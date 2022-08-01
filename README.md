@@ -7,7 +7,35 @@ The idea of this repo is to have the minimum requirements to run laygo2 in the i
 
 Someone using this repo will have two different use cases.
 
-### 1. Setting it along other tools and previous designs.
+### 1. Using just laygo2 for running examples.
+
+This is for people that only want to use laygo2.
+Clone the repo anywhere, do de setup and execute ``start_x.sh`` or ``start_x.bat`` if using windows. You will need an X server, read the iic-osic-tools readme for instructions.
+
+Inside the container you will see
+
+~~~
+/foss/
+    designs/
+        laygo2/
+        laygo2_reduced_workspace/
+        README.md
+        start_x.bat
+        start_x.sh
+        ...
+~~~
+
+The mapping is
+
+~~~
+[Host]       /path/to/laygo2_iic
+[Container] ~/foss/designs/<laygo2_repo_content>
+~~~
+
+
+### 2. Setting it along other tools and previous designs.
+
+**THIS DON'T WORK, MAYBE IF CHANGED SOME .maginit PATHS AND laygo2_examples.**
 
 This is for people who is already using ``iic-osic-tools`` with their ``~/eda/designs`` workspace.
 
@@ -31,34 +59,36 @@ Inside the container you will see
 The mapping is
 
 ~~~
-[Host] ~/eda/designs/laygo2_iic <-> [Container] ~/foss/designs/laygo2_iic
+[Host]      ~/eda/designs/laygo2_iic
+[Container] ~/foss/designs/laygo2_iic
 ~~~
 
 
-### 2. Using just laygo2 for running examples.
+## Operating System Configuration
 
-This is for people that only want to use laygo2.
-Clone the repo anywhere, do de setup and execute ``start_x.sh`` or ``start_x.bat`` if using windows. You will need an X server, read the iic-osic-tools readme for instructions.
+### Linux Users
 
-Inside the container you will see
+1. Install Docker https://docs.docker.com/engine/install/ubuntu/
 
-~~~
-/foss/
-    designs/
-        laygo2/
-        laygo2_reduced_workspace/
-        README.md
-        start_x.bat
-        start_x.sh
-        ...
-~~~
+### Mac Users
 
-The mapping is
+1. Install Docker Desktop
+2. Install XQuartz
+    - XQuartz preference -> secure tap -> enable two options.
 
-~~~
-[Host] /path/to/laygo2_iic <-> [Container] ~/foss/designs/<laygo2_repo_content>
-~~~
 
+### Window Users
+
+1. Install Docker Desktop
+2. Install Vcxsvr
+3. Start XLaunch with:
+    - Multiple Windows
+    - Display Number 0
+    - Start no client
+    - Clipboard + Primary Selection
+    - Native OpenGL
+    - Disable access control
+4. Use Powershell, not cmd
 
 ## Repo Setup
 
@@ -71,7 +101,6 @@ $ git submodule init
 $ git submodule update
 ~~~
 
-
 ## Run examples
 
 The workflow is:
@@ -81,7 +110,7 @@ The workflow is:
 ~~~
 $ ./compile_tcl.sh laygo2_example/inv.py
 $ ./compile_tcl.sh laygo2_example/tinv.py
-$ ./compile_tcl.sh laygo2_example/tinv_small_2x.py
+$ ./compile_tcl.sh laygo2_example/tinv_small_1x.py
 $ ./compile_tcl.sh laygo2_example/dff.py
 ~~~
 
@@ -91,7 +120,7 @@ $ ./compile_tcl.sh laygo2_example/dff.py
 ~~~
 
 $ ./start_mag.sh
-% logic_generated_inv_2x.tcl
+% source logic_generated_inv_2x.tcl
 % exit
 
 // OR
@@ -114,13 +143,14 @@ The problem with this arise when using iic-osic-tools on windows and some bash s
 
 The simple fix is changing the format with vim.
 
+Note: ``<ESC>`` and ``<ENTER>`` means the keys, don't write them.
+
 ~~~
 vim <file>
-<ESC> :set ff=unix
-<ESC> :wq
+<ESC>:set ff=unix<ENTER>
+<ESC>:wq<ENTER>
 ~~~
 
-Note: ``<ESC>`` means the key, don't write it.
 
 We are working in resolve this with local git configuration, and avoid file format modifications.
 
