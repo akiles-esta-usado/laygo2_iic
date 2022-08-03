@@ -1,16 +1,33 @@
 # Reduced Laygo2 Workspace
 
-The idea of this repo is to have the minimum requirements to run laygo2 in the iic-osic-tools docker container.
+The idea of this repo is to have the minimum requirements to run laygo2 with sky130 support inside the iic-osic-tools docker container.
 
 
-## Usage
+## Usage and Configuration
 
-Someone using this repo will have two different use cases.
+### 1. Using container initialization scripts kept in this repo
 
-### 1. Using just laygo2 for running examples.
+This is for people that only want to use laygo2 without previous work.
 
-This is for people that only want to use laygo2.
-Clone the repo anywhere, do de setup and execute ``start_x.sh`` or ``start_x.bat`` if using windows. You will need an X server, read the iic-osic-tools readme for instructions.
+
+#### Repo configuration
+
+Clone the repo anywhere.
+Laygo2 is a submodule of the repo, so we have to bring it.
+
+~~~
+$ git submodule init
+$ git submodule update
+~~~
+
+
+#### Usage
+
+Execute ``start_x.sh`` (Unix/Mac) or ``start_x.bat`` (Windows).
+You will need an X server, read the iic-osic-tools readme for instructions.
+
+
+#### Directory Structure
 
 Inside the container you will see
 
@@ -33,14 +50,45 @@ The mapping is
 ~~~
 
 
-### 2. Setting it along other tools and previous designs.
+### 2. Using other container initialization scripts
 
-**THIS DON'T WORK, MAYBE IF CHANGED SOME .maginit PATHS AND laygo2_examples.**
+This is for people who is already using ``iic-osic-tools`` container with a mapped directory.
 
-This is for people who is already using ``iic-osic-tools`` with their ``~/eda/designs`` workspace.
 
-Clone this repo into the working directory and run the container as usual.
+#### Repo configuration
 
+Clone the repo in the directory.
+Laygo2 is a submodule of the repo, so we have to bring it.
+
+~~~
+$ git submodule init
+$ git submodule update
+~~~
+
+
+#### Modify paths
+
+Inside a container terminal, go to ``laygo2_iic/laygo2_reduced_workspace/`` and run
+
+~~~
+$ ./route_modifier.sh
+~~~
+
+Thit script modifies paths in:
+
+- .maginit
+- compile_tcl.sh
+- laygo2_example/paths.py
+
+The "sky130.magicrc" path shoudn't have changed, since is based in "iic-osic-tools", but if that's the case, see item 3.
+
+
+#### Run container
+
+Everything should work in the same way.
+
+
+#### Directory Structure
 
 Inside the container you will see
 
@@ -56,15 +104,43 @@ Inside the container you will see
             ...
 ~~~
 
-The mapping is
+
+### 3. Using laygo2 and the workspace without a container.
+
+This is for people who has magic and openpdk installed on their systems, or in a linux vm, or wsl with an X server, you name it.
+
+
+#### Repo configuration
+
+Clone the repo anywhere.
+Laygo2 is a submodule of the repo, so we have to bring it.
 
 ~~~
-[Host]      ~/eda/designs/laygo2_iic
-[Container] ~/foss/designs/laygo2_iic
+$ git submodule init
+$ git submodule update
 ~~~
+
+
+#### Modify Paths
+
+**UNTIL NOW, THIS IS NOT SUPPORTED, you had to replace the path in .maginit manually**
+
+First, you have to find the file "sky130.magicrc". Then go to ``laygo2_iic/laygo2_reduced_workspace/`` and run
+
+~~~bash
+$ ./route_modifier.sh /path/to/sky130A.magicrc
+~~~
+
+Thit script modifies paths in:
+
+- .maginit
+- compile_tcl.sh
+- laygo2_example/paths.py
 
 
 ## Operating System Configuration
+
+Basically, you need to have docker and a X11 server.
 
 ### Linux Users
 
@@ -90,16 +166,6 @@ The mapping is
     - Disable access control
 4. Use Powershell, not cmd
 
-## Repo Setup
-
-Some configuration in the cloned repository is needed.
-
-### Install Laygo2
-
-~~~
-$ git submodule init
-$ git submodule update
-~~~
 
 ## Run examples
 
@@ -206,4 +272,10 @@ This will serve as a roundabout until laygo2 is integrated into the container.
 ### Create an intermediate .magicrc file
 
 We can have a file in ``/foss/tools/.magicrc`` or something like that, it will reference the pdk (not fixed to sky130).
+
+
+
+### Decouple sky130_microtemplates from workspace
+
+Maybe we should save that templates into another repo, and when we download them when is required.
 
