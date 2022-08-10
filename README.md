@@ -1,5 +1,12 @@
 # Reduced Laygo2 Workspace
 
+DEPRECATED.
+Use this instead.
+
+https://gitlab.com/mosaic_group/mosaic_os/laygo2_iic
+
+---
+
 The idea of this repo is to have the minimum requirements to run laygo2 with sky130 support inside the iic-osic-tools docker container.
 
 
